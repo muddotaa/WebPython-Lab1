@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Книги</h2>
+<p class="muted">Поточна роль: <strong>{{ role }}</strong></p>
+
+{% if role == "admin" %}
+<div class="panel">
+    <h3>Додати книгу</h3>
+    <form method="post" action="/books/create">
+        <input type="hidden" name="role" value="{{ role }}">
+        <div>
+            <label>Назва</label><br>
+            <input type="text" name="title" required>
+        </div>
+        <div>
+            <label>Жанр</label><br>
+            <input type="text" name="genre" required>
+        </div>
+        <div>
+            <label>Рік</label><br>
+            <input type="number" name="year" required>
+        </div>
+        <div>
+            <label>Автор</label><br>
+            <input type="text" name="author_name" required>
+        </div>
+        <div>
+            <label>Країна автора</label><br>
+            <input type="text" name="author_country">
+        </div>
+        <button type="submit">Створити</button>
+    </form>
+</div>
+{% endif %}
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Рік</th>
+            <th>Статус</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author.full_name }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.year }}</td>
+            <td>
+                {% if book.available %}
+                    доступна
+                {% else %}
+                    видана
+                {% endif %}
+            </td>
+            <td>
+                {% if role == "admin" %}
+                    <a class="button" href="/books/{{ book.id }}/edit?role={{ role }}">Редагувати</a>
+                    <form method="post" action="/books/{{ book.id }}/delete" style="display:inline;">
+                        <input type="hidden" name="role" value="{{ role }}">
+                        <button class="danger" type="submit">Видалити</button>
+                    </form>
+                {% elif role == "user" and book.available %}
+                    <form method="post" action="/loans/create" style="display:inline;">
+                        <input type="hidden" name="role" value="{{ role }}">
+                        <input type="hidden" name="book_id" value="{{ book.id }}">
+                        <button type="submit">Взяти книгу</button>
+                    </form>
+                {% else %}
+                    —
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

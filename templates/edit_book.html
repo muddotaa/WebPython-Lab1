@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Редагування книги</h2>
+
+<form method="post" action="/books/{{ book.id }}/update">
+    <input type="hidden" name="role" value="{{ role }}">
+
+    <div>
+        <label>Назва</label><br>
+        <input type="text" name="title" value="{{ book.title }}" required>
+    </div>
+
+    <div>
+        <label>Жанр</label><br>
+        <input type="text" name="genre" value="{{ book.genre }}" required>
+    </div>
+
+    <div>
+        <label>Рік</label><br>
+        <input type="number" name="year" value="{{ book.year }}" required>
+    </div>
+
+    <div>
+        <label>Автор</label><br>
+        <input type="text" name="author_name" value="{{ book.author.full_name }}" required>
+    </div>
+
+    <div>
+        <label>Країна автора</label><br>
+        <input type="text" name="author_country" value="{{ book.author.country }}">
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" name="available" value="true" {% if book.available %}checked{% endif %}>
+            Книга доступна
+        </label>
+    </div>
+
+    <button type="submit">Зберегти</button>
+    <a class="button" href="/books?role={{ role }}">Назад</a>
+</form>
+{% endblock %}

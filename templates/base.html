@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title or "Бібліотека" }}</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            max-width: 1000px;
+            margin: 8px auto;
+            background: white;
+            color: #222;
+        }
+        header, main {
+            border: 1px solid #777;
+            padding: 10px;
+            margin-bottom: 8px;
+        }
+        nav a {
+            margin-right: 12px;
+            text-decoration: none;
+            color: #2454d6;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        input, select, button {
+            padding: 8px;
+            margin: 4px 0;
+        }
+        button, .button {
+            background: #888;
+            color: white;
+            border: 0;
+            padding: 8px 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .danger {
+            background: #c92a2a;
+        }
+        .muted {
+            color: #666;
+        }
+        .panel {
+            padding: 14px;
+            background: #eee;
+            border: 1px dashed #777;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Вебзастосунок “Бібліотека”</h1>
+    <nav>
+        <a href="/">Головна</a>
+        <a href="/books?role=user">Користувач</a>
+        <a href="/books?role=admin">Адміністратор</a>
+        <a href="/loans?role=user">Позики</a>
+        <a href="/docs">OpenAPI</a>
+    </nav>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

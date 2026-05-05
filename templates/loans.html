@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Позики</h2>
+<p class="muted">Поточна роль: <strong>{{ role }}</strong></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Користувач</th>
+            <th>Книга</th>
+            <th>Дата позики</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for loan in loans %}
+        <tr>
+            <td>{{ loan.id }}</td>
+            <td>{{ loan.user.username }}</td>
+            <td>{{ loan.book.title }}</td>
+            <td>{{ loan.loan_date }}</td>
+            <td>
+                {% if role == "user" %}
+                    <form method="post" action="/loans/{{ loan.id }}/return" style="display:inline;">
+                        <input type="hidden" name="role" value="{{ role }}">
+                        <button type="submit">Повернути</button>
+                    </form>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
