@@ -303,8 +303,7 @@ def return_loan(
 ):
     if role != "user":
         raise HTTPException(
-            status_code=403,
-            detail="ÐŸÐ¾Ð²ÐµÑ€Ñ‚Ð°Ñ‚Ð¸ ÐºÐ½Ð¸Ð³Ð¸ Ð¼Ð¾Ð¶Ðµ Ñ‚Ñ–Ð»ÑŒÐºÐ¸ ÐºÐ¾Ñ€Ð¸ÑÑ‚ÑƒÐ²Ð°Ñ‡"
+            status_code=403
         )
 
     loan = (
@@ -314,7 +313,7 @@ def return_loan(
         .first()
     )
     if not loan:
-        raise HTTPException(status_code=404, detail="ÐŸÐ¾Ð·Ð¸ÐºÑƒ Ð½Ðµ Ð·Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾")
+        raise HTTPException(status_code=404)
 
     loan.book.available = True
     db.delete(loan)
